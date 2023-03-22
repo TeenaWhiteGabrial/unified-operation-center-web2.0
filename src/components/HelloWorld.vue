@@ -36,7 +36,10 @@
 export default {
   name: 'HelloWorld',
   props: {
-    msg: String
+    msg: {
+      type: String,
+      default: 'Welcome to Your Vue.js App'
+    }
   }
 }
 </script>
