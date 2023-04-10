@@ -14,55 +14,53 @@ module.exports = {
   // add your custom rules here
   //it is base on https://github.com/vuejs/eslint-config-vue
   rules: {
-    // 强制第一个属性的位置(属性换行)
-    'vue/first-attribute-linebreak': [2, {
-      // 单行时，第一属性前不允许使用换行符
-      "singleline": 'beside',
-      // 多行时，第一属性前必须使用换行符
-      "multiline": 'below',
+    'vue/first-attribute-linebreak': [2, {//规定 Vue.js 组件中第一个属性是否需要换行，数字2，错误等级2。不满足时eslint会报错
+      "singleline": 'beside',//单行时，表示第一个属性与标签名称在同一行
+      "multiline": 'below',//多行时，表示第一个属性需要换行并与下一行的属性对齐。
     }],
-    "vue/max-attributes-per-line": [2, {
-      "singleline": 10,
+    "vue/max-attributes-per-line": [2, {//限制在 HTML 模板中每个标签上属性的最大数量和每行属性的数量
+      "singleline": 10,//如果是单行，最多放置10个属性，如果属性数量超过了这个值，就需要每个属性单独放在一行上
       "multiline": {
-        "max": 1
+        "max": 1//如果是多行，每行最多放置一个属性
       }
     }],
-    "vue/singleline-html-element-content-newline": "off",
-    "vue/multiline-html-element-content-newline":"off",
-    "vue/name-property-casing": ["error", "PascalCase"],
-    "vue/no-v-html": "off",
-    'accessor-pairs': 2,
-    'arrow-spacing': [2, {
-      'before': true,
-      'after': true
+    "vue/singleline-html-element-content-newline": "off",//当该规则被启用时，如果单行元素的内容过长，ESLINT规定必须进行换行。
+    "vue/multiline-html-element-content-newline": "off",//当该规则被启用时，多行元素的内容必须换行
+    "vue/name-property-casing": ["error", "PascalCase"],//组件的名称属性必须采用PascalCase（即每个单词的首字母都大写，例如MyComponent），如果名称属性不符合这个规范，就会被视为一个错误（error）。
+    
+    "vue/no-v-html": "off",//禁止在 Vue.js 模板中使用 v-html 指令来动态渲染 HTML 代码，以避免潜在的 XSS 攻击风险。
+    'accessor-pairs': 2,//getter和setter方法须成对出现
+    'arrow-spacing': [2, {//检查箭头函数的参数和箭头之间的空格是否符合要求
+      'before': true,//箭头函数参数和箭头之间必须有空格
+      'after': true//在箭头和函数体之间必须有空格
     }],
-    'block-spacing': [2, 'always'],
-    'brace-style': [2, '1tbs', {
-      'allowSingleLine': true
+    'block-spacing': [2, 'always'],//代码块周围必须有空格
+    'brace-style': [2, '1tbs', {//代码块的开始处放置左括号，结束处放置右括号，并在同一行上放置控制语句。
+      'allowSingleLine': true //表示允许在同一行上编写单行代码块。
     }],
-    'camelcase': [0, {
+    'camelcase': [0, {// 不必须使用camelCase规则，每个单词的第一个字母都小写，而后续单词的第一个字母都大写
       'properties': 'always'
     }],
-    'comma-dangle': [2, 'never'],
-    'comma-spacing': [2, {
+    'comma-dangle': [2, 'never'], // 禁止在数组、对象的最后一个元素后使用结尾逗号
+    'comma-spacing': [2, {//逗号前后的空格使用约定
       'before': false,
       'after': true
     }],
-    'comma-style': [2, 'last'],
-    'constructor-super': 2,
-    'curly': [2, 'multi-line'],
-    'dot-location': [2, 'property'],
-    'eol-last': 2,
-    'eqeqeq': ["error", "always", {"null": "ignore"}],
-    'generator-star-spacing': [2, {
+    'comma-style': [2, 'last'],//逗号必须放在当前行的末尾（'last'）
+    'constructor-super': 2,//如果一个类是另一个类的派生类，那么它的构造函数必须使用super()方法调用其父类的构造函数
+    'curly': [2, 'multi-line'],//强制执行在代码块周围使用花括号，即使它们只有一条语句。
+    'dot-location': [2, 'property'],//属性访问符号.在属性名后面，即点号应该在同一行，而不是下一行。
+    'eol-last': 2,//要求文件末尾有一个换行符。
+    'eqeqeq': ["error", "always", {"null": "ignore"}],//使用严格运算符 === 和 !==。在比较null时，使用宽松相等运算符是可以接受的
+    'generator-star-spacing': [2, {//指定了生成器函数 * 号前后的间距。before 和 after 属性都设置为 true，表示在 * 号前后都需要空格。
       'before': true,
       'after': true
     }],
-    'handle-callback-err': [2, '^(err|error)$'],
-    'indent': [2, 2, {
-      'SwitchCase': 1
+    'handle-callback-err': [2, '^(err|error)$'],//处理回调函数时，将错误对象作为回调函数的第一个参数传递，并显式处理这些错误。
+    'indent': [2, 2, {//第一个参数 2 指定了缩进的空格数为两个。第二个参数 2 指定了每个缩进级别的空格数为两个。
+      'SwitchCase': 1//第三个参数 {'SwitchCase': 1} 指定了在 switch 语句中，case 子句相对于 switch 关键字缩进一层，同时 break 语句相对于 case 子句缩进一层。
     }],
-    'jsx-quotes': [2, 'prefer-single'],
+    'jsx-quotes': [2, 'prefer-single'],//表示应该使用单引号来定义 JSX 属性的值
     'key-spacing': [2, {
       'beforeColon': false,
       'afterColon': true
