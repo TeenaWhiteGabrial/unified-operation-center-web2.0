@@ -1,19 +1,13 @@
 <template>
     <div :class="classObj" class="app-wrapper">
-        <navbar :class="{'fixed-header':fixedHeader}">
-        </navbar>
-        <div >
-            <sidebar class="sidebar-container" />
-            <div class="main-container">
-                <app-main />
-            </div>
-        </div>
+        <navbar />
+        <sidebar class="sidebar-container" />
+        <app-main  class="main-container"/>
     </div>
 </template>
 
 <script>
 import { Navbar, Sidebar, AppMain } from './components'
-// import ResizeMixin from './mixin/ResizeHandler'
 
 export default {
   name: 'Layout',
@@ -22,7 +16,6 @@ export default {
     Sidebar,
     AppMain
   },
-//   mixins: [ResizeMixin],
   computed: {
     sidebar() {
       return this.$store.state.app.sidebar
@@ -35,17 +28,13 @@ export default {
     },
     classObj() {
       return {
-        hideSidebar: !this.sidebar.opened,
-        openSidebar: this.sidebar.opened,
-        withoutAnimation: this.sidebar.withoutAnimation,
-        mobile: this.device === 'mobile'
+        noneSidebar: this.sidebar.sideBarStatus == 0,
+        hideSidebar: this.sidebar.sideBarStatus == 1,
+        openSidebar: this.sidebar.sideBarStatus == 2
       }
     }
   },
   methods: {
-    handleClickOutside() {
-      this.$store.dispatch('app/closeSideBar', { withoutAnimation: false })
-    }
   }
 }
 </script>
@@ -72,22 +61,5 @@ export default {
     height: 100%;
     position: absolute;
     z-index: 999;
-  }
-
-  .fixed-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 9;
-    width: 100%;
-    transition: width 0.28s;
-  }
-
-  .hideSidebar .fixed-header {
-    width: calc(100% - 54px)
-  }
-
-  .mobile .fixed-header {
-    width: 100%;
   }
 </style>
