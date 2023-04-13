@@ -33,9 +33,19 @@ module.exports = {
         errors: true
       }
     },
-    onBeforeSetupMiddleware: function (devServer) {
-      devServer.app.use('/api', require('./mock/mock-server.js'));
-    }
+    // before: require('./mock/mock-server.js')
+    
+    // onBeforeSetupMiddleware: function (devServer) {
+    //   devServer.app.use('/vue-element-admin', require('./mock/mock-server.js'));
+    // }
+    devMiddleware: {
+      // 使用 devMiddleware 来实现类似于 before 的功能
+      index: true,
+      writeToDisk: true,
+      publicPath: '/',
+      stats: 'minimal',
+      serverSideRender: true,
+    },
   },
   configureWebpack: {
     name: name,

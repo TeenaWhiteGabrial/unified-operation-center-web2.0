@@ -1,18 +1,18 @@
 const state = {
   sidebar: {
-    sideBarStatus: 0,
+    sideBarStatus: 0
   },
   device: 'desktop'
 }
 
 const mutations = {
-  TOGGLE_SIDEBAR: state => {//展开
+  TOGGLE_SIDEBAR: state => { //展开
     state.sidebar.sideBarStatus = 2
   },
-  CLOSE_SIDEBAR: state => {//收缩
+  CLOSE_SIDEBAR: state => { //收缩
     state.sidebar.sideBarStatus = 1
   },
-  NO_SIDEBAR:state =>{//隐藏
+  NO_SIDEBAR: state => { //隐藏
     state.sidebar.sideBarStatus = 0
   }
 }
@@ -24,9 +24,9 @@ const actions = {
   closeSideBar({ commit }) {
     commit('CLOSE_SIDEBAR')
   },
-  noSideBar({ commit }){
+  noSideBar({ commit }) {
     commit('NO_SIDEBAR')
-  },
+  }
 }
 
 export default {

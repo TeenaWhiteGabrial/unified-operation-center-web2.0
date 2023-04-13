@@ -3,13 +3,24 @@
     <el-button @click="noSideBar">无菜单栏</el-button>
     <el-button @click="closeSideBar">缩放菜单栏</el-button>
     <el-button @click="toggleSideBar">展开菜单栏</el-button>
+    <el-button @click="login">登录</el-button>
+    <el-button @click="login">登出</el-button>
   </div>
 </template>
 
 <script>
+import { login } from '@/api/user'
 import { mapGetters } from 'vuex'
 
 export default {
+  data() {
+    return {
+      loginForm: {
+        username: 'admin',
+        password: '111111'
+      },
+    }
+  },
   computed: {
     ...mapGetters([
       'sidebar',
@@ -26,6 +37,9 @@ export default {
     noSideBar() {
       this.$store.dispatch('app/noSideBar')
     },
+    async login() {
+      this.$store.dispatch('user/login',this.loginForm)
+    },
     async logout() {
       await this.$store.dispatch('user/logout')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
@@ -39,7 +53,7 @@ export default {
   height: 50px;
   overflow: hidden;
   background: #fff;
-  box-shadow: 0 1px 4px rgba(0,21,41,.08);
+  box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
 
   position: fixed;
   top: 0;

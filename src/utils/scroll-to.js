@@ -27,6 +27,7 @@ function position() {
 }
 
 /**
+ * 页面滚动动画
  * @param {number} to
  * @param {number} duration
  * @param {Function} callback

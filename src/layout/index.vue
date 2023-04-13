@@ -1,9 +1,9 @@
 <template>
-    <div :class="classObj" class="app-wrapper">
-        <navbar />
-        <sidebar class="sidebar-container" />
-        <app-main  class="main-container"/>
-    </div>
+  <div :class="classObj" class="app-wrapper">
+    <navbar />
+    <sidebar class="sidebar-container" />
+    <app-main class="main-container" />
+  </div>
 </template>
 
 <script>
@@ -28,9 +28,9 @@ export default {
     },
     classObj() {
       return {
-        noneSidebar: this.sidebar.sideBarStatus == 0,
-        hideSidebar: this.sidebar.sideBarStatus == 1,
-        openSidebar: this.sidebar.sideBarStatus == 2
+        noneSidebar: this.sidebar.sideBarStatus === 0,
+        hideSidebar: this.sidebar.sideBarStatus === 1,
+        openSidebar: this.sidebar.sideBarStatus === 2
       }
     }
   },

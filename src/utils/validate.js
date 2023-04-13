@@ -56,6 +56,7 @@ export function validAlphabets(str) {
 }
 
 /**
+ * 邮箱格式验证
  * @param {string} email
  * @returns {Boolean}
  */
