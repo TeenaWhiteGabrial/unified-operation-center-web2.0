@@ -12,8 +12,8 @@ const name = defaultSettings.title || 'vue Element Admin' // page title
 // use administrator privileges to execute the command line.
 // For example, Mac: sudo npm run
 // You can change the port by the following method:
-// port = 9527 npm run dev OR npm run dev --port = 9527
-const port = process.env.port || process.env.npm_config_port || 9527 // dev port
+// port = 8080 npm run dev OR npm run dev --port = 8080
+const port = process.env.port || process.env.npm_config_port || 8080 // dev port
 
 // All configuration item explanations can be find in https://cli.vuejs.org/config/
 const PreloadWebpackPlugin = require('@vue/preload-webpack-plugin')
@@ -27,16 +27,35 @@ module.exports = {
   devServer: {
     port: port,
     open: true,
+    host: 'localhost',
     client: {
       overlay: {
         warnings: false,
         errors: true
       }
     },
+    proxy: {
+      '/maxkey-mgt-api': {
+        target: 'http://mgt.maxkey.top:8018', // 开发
+        changeOrigin: true, // 表示是否跨域
+      },
+      '/uoc': {
+        target: 'http://10.221.19.226',
+        changeOrigin: true, // 表示是否跨域
+      },
+      '/ucc': {
+        target: 'http://10.221.19.221:80', // 开发
+        changeOrigin: true, // 表示是否跨域
+      },
+      '/appstore': {
+        target: 'http://117.73.3.245:8083', // 开发
+        changeOrigin: true, // 表示是否跨域
+      }
+    },
     // before: require('./mock/mock-server.js')
-    
+
     // onBeforeSetupMiddleware: function (devServer) {
-    //   devServer.app.use('/vue-element-admin', require('./mock/mock-server.js'));
+    //   devServer.app.use('/', require('./mock/mock-server.js'));
     // }
     devMiddleware: {
       // 使用 devMiddleware 来实现类似于 before 的功能

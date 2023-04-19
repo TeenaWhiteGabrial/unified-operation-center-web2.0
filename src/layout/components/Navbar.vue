@@ -3,22 +3,19 @@
     <el-button @click="noSideBar">无菜单栏</el-button>
     <el-button @click="closeSideBar">缩放菜单栏</el-button>
     <el-button @click="toggleSideBar">展开菜单栏</el-button>
+    <el-button @click="getTenantID">获取租户ID</el-button>
     <el-button @click="login">登录</el-button>
-    <el-button @click="login">登出</el-button>
+    <el-button @click="logout">登出</el-button>
   </div>
 </template>
 
 <script>
-import { login } from '@/api/user'
 import { mapGetters } from 'vuex'
 
 export default {
   data() {
     return {
-      loginForm: {
-        username: 'admin',
-        password: '111111'
-      },
+      loginUrl: ''
     }
   },
   computed: {
@@ -26,6 +23,9 @@ export default {
       'sidebar',
       'avatar'
     ])
+  },
+  created(){
+    this.init()
   },
   methods: {
     toggleSideBar() {
@@ -37,8 +37,17 @@ export default {
     noSideBar() {
       this.$store.dispatch('app/noSideBar')
     },
+    async getTenantID(){
+      this.$store.dispatch('user/getTenantId')
+    },
     async login() {
-      this.$store.dispatch('user/login',this.loginForm)
+      const hash = location.hash
+      const codeIndex = hash.indexOf('code=')
+      if(codeIndex > -1){
+        this.$store.dispatch('user/login', hash.substring(codeIndex + 5))
+      }else{
+        window.location = process.env.VUE_APP_LOGIN_URL + process.env.VUE_APP_REDIRECTURL
+      }
     },
     async logout() {
       await this.$store.dispatch('user/logout')

@@ -1,4 +1,4 @@
-import { login, logout, getInfo } from '@/api/user'
+import { getTenantIdByUrl, login, logout, getInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
 
@@ -40,20 +40,36 @@ const mutations = {
 }
 
 const actions = {
-  // user login
-  login({ commit }, userInfo) {
-    const { username, password } = userInfo
+  // getTenantID
+  getTenantId({ commit }) {
+    const appUrl = location.host;
     return new Promise((resolve, reject) => {
-      login({ username: username.trim(), password: password }).then(response => {
-        console.log(response)
-        debugger
-        const { data } = response
-        commit('SET_TOKEN', data.token)
-        setToken(data.token)
-        resolve()
+      getTenantIdByUrl(appUrl).then((response) => {
+        if (response.success == 'success') {
+          const data = response.data.tenant_id
+          commit('SET_TENANTID', data)
+          resolve()
+        } else {
+          reject()
+        }
       }).catch(error => {
         reject(error)
       })
+    })
+  },
+
+  // user login
+  login({ commit }, code) {
+    return new Promise((resolve, reject) => {
+      login({ tenant_id: state.tenantId, code: code, redirect_uri: process.env.VUE_APP_REDIRECTURL })
+        .then(response => {
+          const { data } = response
+          // commit('SET_TOKEN', data.token)
+          //setToken(data.token)
+          resolve()
+        }).catch(error => {
+          reject(error)
+        })
     })
   },
 
