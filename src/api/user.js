@@ -15,18 +15,19 @@ export function login(data) {
   })
 }
 
-export function logout() {
+export function logout(data) {
   return request({
     url: 'uoc/user/logout',
-    method: 'post'
+    method: 'post',
+    data
   })
 }
 
-export function getInfo(token) {
+export function getUserInfo(data) {
   return request({
-    url: '/vue-element-admin/user/info',
-    method: 'get',
-    params: { token }
+    url: '/uoc/config/getBaseConfig',
+    method: 'post',
+    data
   })
 }
 

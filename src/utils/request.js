@@ -16,13 +16,15 @@ const service = axios.create({
 // request interceptor
 service.interceptors.request.use(
   config => {
-    // if (store.getters.token) {
-    //   // let each request carry token
-    //   // ['X-Token'] is a custom headers key
-    //   // please modify it according to the actual situation
-    debugger
-    config.headers['Authorization'] = getToken()
-    // }
+    if(config.data === undefined){
+      config.data = {}
+    }
+    if (store.getters.token) {
+      // let each request carry token
+      // ['X-Token'] is a custom headers key
+      // please modify it according to the actual situation
+      config.headers['Authorization'] = getToken()
+    }
     return config
   },
   error => {

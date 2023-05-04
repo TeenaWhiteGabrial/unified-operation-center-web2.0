@@ -1,6 +1,6 @@
 <template>
   <div class="wscn-http404-container">
-    404
+    {{ message }}
   </div>
 </template>
 

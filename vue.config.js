@@ -40,7 +40,7 @@ module.exports = {
         changeOrigin: true, // 表示是否跨域
       },
       '/uoc': {
-        target: 'http://10.221.19.226',
+        target: 'http://10.221.19.221',
         changeOrigin: true, // 表示是否跨域
       },
       '/ucc': {

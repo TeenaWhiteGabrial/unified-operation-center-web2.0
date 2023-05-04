@@ -1,4 +1,4 @@
-import { getTenantIdByUrl, login, logout, getInfo } from '@/api/user'
+import { getTenantIdByUrl, login, logout, getUserInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
 
@@ -7,7 +7,6 @@ const getDefaultState = () => {
     token: getToken(),
     userName: '',
     avatar: '',// 运营中心logo
-    userType: '',
     tenantId: '',
     isLogin: false
   }
@@ -27,9 +26,6 @@ const mutations = {
   },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
-  },
-  SET_USER_TYPE: (state, userType) => {
-    state.userType = userType
   },
   SET_TENANTID: (state, tenantId) => {
     state.tenantId = tenantId
@@ -63,10 +59,22 @@ const actions = {
     return new Promise((resolve, reject) => {
       login({ tenant_id: state.tenantId, code: code, redirect_uri: process.env.VUE_APP_REDIRECTURL })
         .then(response => {
-          const { data } = response
-          // commit('SET_TOKEN', data.token)
-          //setToken(data.token)
-          resolve()
+          if (response.data.TYPE === '运营中心') {
+            commit('SET_TOKEN', response.data.access_token)
+            commit('SET_TOKEN', response.data.access_token)
+            setToken(response.data.access_token)
+
+            let newUrl = location.protocol + '//' + location.host + location.pathname
+            window.history.replaceState({
+              path: newUrl
+            }, '', newUrl)
+            console.info('登录成功')
+            resolve()
+          } else {
+            console.error('非运营中心账号！')
+            reject()
+          }
+
         }).catch(error => {
           reject(error)
         })
@@ -74,24 +82,15 @@ const actions = {
   },
 
   // get user info
-  getInfo({ commit, state }) {
+  getUserInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
-      getInfo(state.token)
+      getUserInfo()
         .then(response => {
-          const { data } = response
-
-          if (!data) {
-            return reject('Verification failed, please Login again.')
-          }
-
-          const { name, avatar, userType, tenantId } = data
-
-          commit('SET_USER_NAME', name)
-          commit('SET_AVATAR', avatar)
-          commit('SET_USER_TYPE', userType)
-          commit('SET_TENANTID', tenantId)
+          commit('SET_USER_NAME', response.data.user_name)
+          commit('SET_AVATAR', response.data.logo)
+          commit('SET_TENANTID', response.data.tenant_id)
           commit('SET_IS_LOGIN', true)
-          resolve(data)
+          resolve()
         }).catch(error => {
           reject(error)
         })
@@ -101,12 +100,14 @@ const actions = {
   // user logout
   logout({ commit, state }) {
     return new Promise((resolve, reject) => {
-      logout(state.token)
+      logout()
         .then(() => {
           removeToken() // must remove  token  first
           resetRouter()
           commit('RESET_STATE')
-          resolve()
+          console.info('退出成功！', process.env.VUE_APP_LOGIN_URL + process.env.VUE_APP_REDIRECTURL)
+          
+          // window.location = process.env.VUE_APP_LOGIN_URL + process.env.VUE_APP_REDIRECTURL
         }).catch(error => {
           reject(error)
         })

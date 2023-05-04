@@ -7,7 +7,7 @@
     padding-top: $navBarHeight;
     position: relative;
     width: calc(100% - $sideBarWidth);
-    overflow: hidden;
+    overflow: auto;
   }
 
   .sidebar-container {
@@ -162,6 +162,7 @@
     }
     .main-container {
       margin-left: 0px;
+      width:100%;
     }
   }
   .el-menu--collapse .el-menu .el-submenu {

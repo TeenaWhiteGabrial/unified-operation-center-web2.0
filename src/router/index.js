@@ -13,11 +13,6 @@ import Layout from '@/layout'
  */
 export const constantRoutes = [
   {
-    path: '/404',
-    component: () => import('@/views/404'),
-    hidden: true
-  },
-  {
     path: '/',
     component: Layout,
     redirect: '/dashboard',
@@ -27,7 +22,12 @@ export const constantRoutes = [
         name: 'dashboard',
         component: () => import('@/views/dashboard/index'),
         meta: { title: '概览', icon: 'dashboard' }
-      }
+      }, 
+      {
+        path: '/404',
+        component: () => import('@/views/404'),
+        hidden: true
+      },
     ]
   },
 
