@@ -1,10 +1,10 @@
 <template>
   <div class="navbar">
-    <img  :src="avatar" class="icon_logo" id="云洲LOGO" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"/>
+    <img  :src="avatar" class="icon_logo" id="云洲LOGO" width="48" height="48" viewBox="0 0 48 48"/>
     <label class="project-title">运营中心</label>
     <div class="project-menu">
       <div class="menu-all">
-        <label v-for="menu in menuList" :class="['menu-item', {'active-item': activeMenu === menu.code}]" @click="changeMenu(menu)">{{ menu.title }}</label>
+        <label v-for="menu in menuList" :key="menu.code" :class="['menu-item', {'active-item': activeMenu === menu.code}]" @click="changeMenu(menu)">{{ menu.title }}</label>
       </div>
       <el-dropdown class="user-style pointer">
         <svg-icon icon-class="user" class="userIcon"/>
@@ -31,17 +31,17 @@ export default {
       menuList: [
         {
           title: '概览',
-          route:'/dashboard',
+          route:'dashboard',
           code:'overview'
         },
         {
           title: '门户管理',
-          route: '/content',
+          route: 'content',
           code: 'portal'
         },
         {
           title: '运营管理',
-          route: '/product',
+          route: 'product',
           code: 'operate'
         },
         {
@@ -51,12 +51,12 @@ export default {
         },
         {
           title: '运营统计',
-          route: '/platform-statistics',
+          route: 'platform-statistics',
           code: 'statistics'
         },
         {
           title: '工单管理',
-          route: '/order-list',
+          route: 'order-list',
           code: 'order'
         },
       ],
@@ -94,7 +94,8 @@ export default {
       }
     },
     changeMenu(menu) {
-      this.activeMenu = menu.code
+      this.activeMenu = menu.code;
+      this.$router.push(menu.route)
     },
     async logout() {
       await store.dispatch('user/logout')
