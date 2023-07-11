@@ -6,12 +6,7 @@ const role = require('./role')
 const article = require('./article')
 const search = require('./remote-search')
 
-const mocks = [
-  ...user,
-  ...role,
-  ...article,
-  ...search
-]
+const mocks = [...user, ...role, ...article, ...search]
 
 // for front mock
 // please use it cautiously, it will redefine XMLHttpRequest,
@@ -20,7 +15,7 @@ function mockXHR() {
   // mock patch
   // https://github.com/nuysoft/Mock/issues/300
   Mock.XHR.prototype.proxy_send = Mock.XHR.prototype.send
-  Mock.XHR.prototype.send = function() {
+  Mock.XHR.prototype.send = function (...args) {
     if (this.custom.xhr) {
       this.custom.xhr.withCredentials = this.withCredentials || false
 
@@ -28,11 +23,11 @@ function mockXHR() {
         this.custom.xhr.responseType = this.responseType
       }
     }
-    this.proxy_send(...arguments)
+    this.proxy_send(args)
   }
 
   function XHR2ExpressReqWrap(respond) {
-    return function(options) {
+    return function (options) {
       let result = null
       if (respond instanceof Function) {
         const { body, type, url } = options
@@ -40,7 +35,7 @@ function mockXHR() {
         result = respond({
           method: type,
           body: JSON.parse(body),
-          query: param2Obj(url)
+          query: param2Obj(url),
         })
       } else {
         result = respond
@@ -56,5 +51,5 @@ function mockXHR() {
 
 module.exports = {
   mocks,
-  mockXHR
+  mockXHR,
 }

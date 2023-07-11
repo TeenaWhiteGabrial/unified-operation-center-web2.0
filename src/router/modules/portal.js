@@ -1,4 +1,2 @@
-const portalRoute = [
-
-]
+const portalRoute = []
 export default portalRoute

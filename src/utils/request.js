@@ -1,37 +1,37 @@
 import axios from 'axios'
-import { MessageBox, Message } from 'element-ui'
+import { Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
 
 // create an axios instance
 const service = axios.create({
-  baseURL: location.protocol + '//' + location.host, // url = base url + request url
+  baseURL: `${location.protocol}//${location.host}`, // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
   timeout: 50000, // request timeout
   headers: {
-    'Content-Type': 'application/json;charset=utf-8;'
-  }
+    'Content-Type': 'application/json;charset=utf-8;',
+  },
 })
 
 // request interceptor
 service.interceptors.request.use(
-  config => {
-    if(config.data === undefined){
+  (config) => {
+    if (config.data === undefined) {
       config.data = {}
     }
     if (store.getters.token) {
       // let each request carry token
       // ['X-Token'] is a custom headers key
       // please modify it according to the actual situation
-      config.headers['Authorization'] = getToken()
+      config.headers.Authorization = getToken()
     }
     return config
   },
-  error => {
+  (error) => {
     // do something with request error
     console.log(error) // for debug
     return Promise.reject(error)
-  }
+  },
 )
 
 // response interceptor
@@ -39,29 +39,29 @@ service.interceptors.response.use(
   /**
    * judge the status by HTTP Status Code
    */
-  response => {
+  (response) => {
     const res = response.data
     // if the custom code is not 20000, it is judged as an error.
     if ([403, 401].includes(response.status)) {
       Message({
         message: res.message || '请求失败',
         type: 'error',
-        duration: 5 * 1000
+        duration: 5 * 1000,
       })
       return Promise.reject(new Error(res.message || 'Error'))
     } else {
       return res
     }
   },
-  error => {
-    console.log('err' + error) // for debug
+  (error) => {
+    console.log(`err${error}`) // for debug
     Message({
       message: error.message,
       type: 'error',
-      duration: 5 * 1000
+      duration: 5 * 1000,
     })
     return Promise.reject(error)
-  }
+  },
 )
 
 export default service

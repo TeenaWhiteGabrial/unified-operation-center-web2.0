@@ -1,6 +1,7 @@
 @import './variables.scss';
 
-@mixin colorBtn($color) {//定义一个可以在整个样式表中重复使用的样式
+@mixin colorBtn($color) {
+  //定义一个可以在整个样式表中重复使用的样式
   background: $color;
 
   // & 表示当前选择器本身
@@ -15,31 +16,32 @@
 }
 
 .blue-btn {
-  @include colorBtn($blue)//@include 可以将混入 @mixin引入到文档中
+  @include colorBtn($blue) //@include 可以将混入 @mixin引入到文档中
+;
 }
 
 .light-blue-btn {
-  @include colorBtn($light-blue)
+  @include colorBtn($light-blue);
 }
 
 .red-btn {
-  @include colorBtn($red)
+  @include colorBtn($red);
 }
 
 .pink-btn {
-  @include colorBtn($pink)
+  @include colorBtn($pink);
 }
 
 .green-btn {
-  @include colorBtn($green)
+  @include colorBtn($green);
 }
 
 .tiffany-btn {
-  @include colorBtn($tiffany)
+  @include colorBtn($tiffany);
 }
 
 .yellow-btn {
-  @include colorBtn($yellow)
+  @include colorBtn($yellow);
 }
 
 .pan-btn {

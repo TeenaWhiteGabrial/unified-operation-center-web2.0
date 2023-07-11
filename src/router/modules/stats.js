@@ -1,4 +1,2 @@
-const statsRoute = [
-
-]
+const statsRoute = []
 export default statsRoute

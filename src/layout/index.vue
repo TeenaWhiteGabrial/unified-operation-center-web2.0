@@ -14,7 +14,7 @@ export default {
   components: {
     Navbar,
     Sidebar,
-    AppMain
+    AppMain,
   },
   computed: {
     sidebar() {
@@ -30,19 +30,17 @@ export default {
       return {
         noneSidebar: this.sidebar.sideBarStatus === 0,
         hideSidebar: this.sidebar.sideBarStatus === 1,
-        openSidebar: this.sidebar.sideBarStatus === 2
+        openSidebar: this.sidebar.sideBarStatus === 2,
       }
-    }
+    },
   },
-  methods: {
-
-  }
+  methods: {},
 }
 </script>
 
 <style lang="scss" scoped>
-@import "~@/styles/mixin.scss";
-@import "~@/styles/variables.scss";
+@import '~@/styles/mixin.scss';
+@import '~@/styles/variables.scss';
 
 .app-wrapper {
   @include clearfix;

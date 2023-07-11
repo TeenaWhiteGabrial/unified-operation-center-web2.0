@@ -25,14 +25,14 @@ module.exports = {
   lintOnSave: process.env.NODE_ENV === 'development',
   productionSourceMap: false,
   devServer: {
-    port: port,
+    port,
     open: true,
     host: 'localhost',
     client: {
       overlay: {
         warnings: false,
-        errors: true
-      }
+        errors: true,
+      },
     },
     proxy: {
       '/maxkey-mgt-api': {
@@ -50,7 +50,7 @@ module.exports = {
       '/appstore': {
         target: 'http://117.73.3.245:8083', // 开发
         changeOrigin: true, // 表示是否跨域
-      }
+      },
     },
     // before: require('./mock/mock-server.js')
 
@@ -67,18 +67,18 @@ module.exports = {
     },
   },
   configureWebpack: {
-    name: name,
+    name,
     resolve: {
       alias: {
-        '@': resolve('src')
-      }
+        '@': resolve('src'),
+      },
     },
     plugins: [
       new PreloadWebpackPlugin({
         rel: 'preload',
         include: 'initial',
-        fileBlacklist: [/\.map$/, /hot-update\.js$/, /runtime\..*\.js$/]
-      })
+        fileBlacklist: [/\.map$/, /hot-update\.js$/, /runtime\..*\.js$/],
+      }),
     ],
     optimization: {
       runtimeChunk: 'single',
@@ -89,54 +89,51 @@ module.exports = {
             name: 'chunk-libs',
             test: /[\\/]node_modules[\\/]/,
             priority: 10,
-            chunks: 'initial'
+            chunks: 'initial',
           },
           elementUI: {
             name: 'chunk-elementUI',
             priority: 20,
-            test: /[\\/]node_modules[\\/]_?element-ui(.*)/
+            test: /[\\/]node_modules[\\/]_?element-ui(.*)/,
           },
           commons: {
             name: 'chunk-commons',
             test: resolve('src/components'),
             minChunks: 3,
             priority: 5,
-            reuseExistingChunk: true
-          }
-        }
-      }
-    }
+            reuseExistingChunk: true,
+          },
+        },
+      },
+    },
   },
   chainWebpack(config) {
     // config.plugin('prefetch').delete('prefetch')
 
-    config.module.rule('svg')
-      .exclude.add(resolve('src/icons'))
-      .end()
+    config.module.rule('svg').exclude.add(resolve('src/icons')).end()
 
-    config.module.rule('icons')
+    config.module
+      .rule('icons')
       .test(/\.svg$/)
       .include.add(resolve('src/icons'))
       .end()
       .use('svg-sprite-loader')
       .loader('svg-sprite-loader')
       .options({
-        symbolId: 'icon-[name]'
+        symbolId: 'icon-[name]',
       })
       .end()
 
-    config
-      .when(process.env.NODE_ENV !== 'development',
-        config => {
-          config
-            .plugin('ScriptExtHtmlWebpackPlugin')
-            .after('html')
-            .use('script-ext-html-webpack-plugin', [{
-              inline: /runtime\..*\.js$/
-            }])
-            .end()
-        }
-      )
-  }
+    config.when(process.env.NODE_ENV !== 'development', (conf) => {
+      conf
+        .plugin('ScriptExtHtmlWebpackPlugin')
+        .after('html')
+        .use('script-ext-html-webpack-plugin', [
+          {
+            inline: /runtime\..*\.js$/,
+          },
+        ])
+        .end()
+    })
+  },
 }
-

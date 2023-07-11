@@ -1,17 +1,23 @@
 <template>
   <div class="navbar">
-    <img  :src="avatar" class="icon_logo" id="云洲LOGO" width="48" height="48" viewBox="0 0 48 48"/>
+    <img :src="avatar" class="icon_logo" id="云洲LOGO" width="48" height="48" viewBox="0 0 48 48" />
     <label class="project-title">运营中心</label>
     <div class="project-menu">
       <div class="menu-all">
-        <label v-for="menu in menuList" :key="menu.code" :class="['menu-item', {'active-item': activeMenu === menu.code}]" @click="changeMenu(menu)">{{ menu.title }}</label>
+        <label
+          v-for="menu in menuList"
+          :key="menu.code"
+          :class="['menu-item', { 'active-item': activeMenu === menu.code }]"
+          @click="changeMenu(menu)"
+          >{{ menu.title }}</label
+        >
       </div>
       <el-dropdown class="user-style pointer">
-        <svg-icon icon-class="user" class="userIcon"/>
+        <svg-icon icon-class="user" class="userIcon" />
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item>您好，{{ userName }}</el-dropdown-item>
           <el-dropdown-item divided @click.native="logout">
-            <span style="display:block;">退出</span>
+            <span style="display: block">退出</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -31,44 +37,40 @@ export default {
       menuList: [
         {
           title: '概览',
-          route:'dashboard',
-          code:'overview'
+          route: 'dashboard',
+          code: 'overview',
         },
         {
           title: '门户管理',
           route: 'content',
-          code: 'portal'
+          code: 'portal',
         },
         {
           title: '运营管理',
           route: 'product',
-          code: 'operate'
+          code: 'operate',
         },
         {
           title: '多租户管理',
           route: '/tenant-list',
-          code: 'multenand'
+          code: 'multenand',
         },
         {
           title: '运营统计',
           route: 'platform-statistics',
-          code: 'statistics'
+          code: 'statistics',
         },
         {
           title: '工单管理',
           route: 'order-list',
-          code: 'order'
+          code: 'order',
         },
       ],
-      activeMenu:'dashboard'
+      activeMenu: 'dashboard',
     }
   },
   computed: {
-    ...mapGetters([
-      'sidebar',
-      'avatar',
-      'userName'
-    ])
+    ...mapGetters(['sidebar', 'avatar', 'userName']),
   },
   created() {
     this.init()
@@ -80,27 +82,28 @@ export default {
       }
       // 当有code时，进行登录
       const hasToken = getToken()
-      const hash = location.hash
+      const { hash } = location
       const codeIndex = hash.indexOf('code=')
-      
+
       if (codeIndex > -1) {
         await store.dispatch('user/login', hash.substring(codeIndex + 5))
         await store.dispatch('user/getUserInfo')
       } else if (hasToken) {
         await store.dispatch('user/getUserInfo')
-      } else { //没有code，没有token，跳转到maxkey登录页面
+      } else {
+        // 没有code，没有token，跳转到maxkey登录页面
         console.log(process.env.VUE_APP_LOGIN_URL + process.env.VUE_APP_REDIRECTURL)
         window.location = process.env.VUE_APP_LOGIN_URL + process.env.VUE_APP_REDIRECTURL
       }
     },
     changeMenu(menu) {
-      this.activeMenu = menu.code;
+      this.activeMenu = menu.code
       this.$router.push(menu.route)
     },
     async logout() {
       await store.dispatch('user/logout')
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -109,7 +112,7 @@ export default {
   height: 50px;
   overflow: hidden;
   background: #fff;
-  box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
+  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
 
   position: fixed;
   top: 0;
@@ -147,7 +150,7 @@ export default {
         color: #262626;
         cursor: pointer;
       }
-      .active-item{
+      .active-item {
         font-weight: bolder;
       }
     }
@@ -166,6 +169,5 @@ export default {
       }
     }
   }
-
 }
 </style>

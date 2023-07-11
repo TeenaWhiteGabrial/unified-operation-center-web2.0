@@ -1,4 +1,2 @@
-const operateRoute = [
-
-]
+const operateRoute = []
 export default operateRoute

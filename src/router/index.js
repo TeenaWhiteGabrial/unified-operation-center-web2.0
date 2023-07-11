@@ -5,10 +5,10 @@ import operateRoute from './modules/operate'
 import multenantRoute from './modules/multenant'
 import statsRoute from './modules/stats'
 
-Vue.use(Router)
-
 /* Layout */
 import Layout from '@/layout'
+
+Vue.use(Router)
 
 /**
  * 路由和菜单的关联性不强，分开
@@ -18,14 +18,14 @@ export const constantRoutes = [
     path: '/',
     component: Layout,
     redirect: '/dashboard',
-    meta:{},
+    meta: {},
     children: [
       {
         path: '/dashboard',
         name: 'dashboard',
         component: () => import('@/views/dashboard/index'),
-        meta: { title: '概览', icon: 'dashboard' }
-      }, 
+        meta: { title: '概览', icon: 'dashboard' },
+      },
       // ...portalRoute,
       // ...operateRoute,
       // ...multenantRoute,
@@ -33,9 +33,9 @@ export const constantRoutes = [
       {
         path: '/404',
         component: () => import('@/views/404'),
-        hidden: true
+        hidden: true,
       },
-    ]
+    ],
   },
   { path: '*', redirect: '/404', hidden: true },
 ]
@@ -44,14 +44,15 @@ export const asyncMenu = {
   portalRoute,
   operateRoute,
   multenantRoute,
-  statsRoute
+  statsRoute,
 }
 
-const createRouter = () => new Router({
-  // mode: 'history', // require service support
-  scrollBehavior: () => ({ y: 0 }),
-  routes: constantRoutes
-})
+const createRouter = () =>
+  new Router({
+    // mode: 'history', // require service support
+    scrollBehavior: () => ({ y: 0 }),
+    routes: constantRoutes,
+  })
 
 const router = createRouter()
 
