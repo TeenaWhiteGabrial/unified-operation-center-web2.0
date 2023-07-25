@@ -30,6 +30,7 @@ import { mapGetters } from 'vuex'
 import store from '@/store'
 import { getToken } from '@/utils/auth' // get token from cookie
 import columns from '../../../config/columns.json'
+
 export default {
   data() {
     return {

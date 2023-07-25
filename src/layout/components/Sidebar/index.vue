@@ -25,6 +25,7 @@
 <script>
 import SidebarItem from './SidebarItem'
 import { mapGetters } from 'vuex'
+
 export default {
   components: {
     SidebarItem,

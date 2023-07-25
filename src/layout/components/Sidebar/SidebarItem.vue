@@ -21,6 +21,7 @@
 
 <script>
 import path from 'path'
+
 export default {
   name: 'SidebarItem',
   props: {

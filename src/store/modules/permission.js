@@ -1,10 +1,11 @@
 import { asyncRoutes } from '@/router'
+
 const menuData = [
   {
-    code: 'basic-config', //菜单code，对应路由path
-    desc: '基本配置', //菜单名称
+    code: 'basic-config', // 菜单code，对应路由path
+    desc: '基本配置', // 菜单名称
     column: 'website', // 所属 栏目
-    icon: 'content', //使用图标
+    icon: 'content', // 使用图标
   },
   {
     code: 'sub-station',
@@ -82,7 +83,7 @@ const menuData = [
     code: 'supply-demand',
     desc: '供需管理',
     column: 'operation',
-    alwaysShow: false, //当只有一个子菜单时，是否用子菜单替代父菜单
+    alwaysShow: false, // 当只有一个子菜单时，是否用子菜单替代父菜单
     icon: 'content',
     children: [
       {
@@ -152,13 +153,13 @@ const menuData = [
 ]
 
 function generateMenuList(menu) {
-  //data是传入的菜单，[]
+  // data是传入的菜单，[]
   const res = JSON.parse(JSON.stringify(menu))
   for (let i = 0; i < res.length; i++) {
     for (let j = 0; j < asyncRoutes.length; j++) {
       if (res[i].children) {
-        //菜单有children，说明有二级菜单
-        res[i].path = '/' + res[i].code
+        // 菜单有children，说明有二级菜单
+        res[i].path = `/${  res[i].code}`
         res[i].meta = { icon: res[i].icon, title: res[i].desc }
         res[i].children = generateMenuList(res[i].children)
       } else if (res[i].code === asyncRoutes[j].name) {
@@ -213,7 +214,7 @@ const actions = {
         operationData: [],
       }
       for (let i = 0; i < menuList.length; i++) {
-        columnList[menuList[i].column + 'Data'].push(menuList[i]) //栏目
+        columnList[`${menuList[i].column  }Data`].push(menuList[i]) // 栏目
       }
       commit('SET_COLUMN_LIST', columnList)
 

@@ -35,7 +35,7 @@ router.beforeEach(async (to, from, next) => {
   //   console.log(process.env.VUE_APP_LOGIN_URL + process.env.VUE_APP_REDIRECTURL)
   //   window.location = process.env.VUE_APP_LOGIN_URL + process.env.VUE_APP_REDIRECTURL
   // }
-  debugger
+
   if (!store.getters.routerList || store.getters.routerList.length === 0) {
     const routeList = await store.dispatch('permission/generateMenuRoutes')
     routeList.forEach((route) => {

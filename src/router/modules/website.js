@@ -1,5 +1,6 @@
 /* Layout */
 import Layout from '@/layout'
+
 export default [
   {
     path: '/basic-config',

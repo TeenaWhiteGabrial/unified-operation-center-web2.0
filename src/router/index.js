@@ -33,7 +33,7 @@ export const constantRoutes = [
 ]
 
 export const asyncRoutes = [
-  //generate by role-permission
+  // generate by role-permission
   ...website,
   ...operation,
 ]
