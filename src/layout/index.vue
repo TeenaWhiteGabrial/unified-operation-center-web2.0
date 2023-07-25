@@ -42,6 +42,10 @@ export default {
 @import '~@/styles/mixin.scss';
 @import '~@/styles/variables.scss';
 
+.main-container {
+  @include scrollBar;
+}
+
 .app-wrapper {
   @include clearfix;
   position: relative;

@@ -7,7 +7,7 @@
         <label
           v-for="menu in menuList"
           :key="menu.code"
-          :class="['menu-item', { 'active-item': activeMenu === menu.code }]"
+          :class="['menu-item', { 'active-item': activeColumn === menu.code }]"
           @click="changeMenu(menu)"
           >{{ menu.title }}</label
         >
@@ -29,75 +29,23 @@
 import { mapGetters } from 'vuex'
 import store from '@/store'
 import { getToken } from '@/utils/auth' // get token from cookie
-
+import columns from '../../../config/columns.json'
 export default {
   data() {
     return {
-      loginUrl: '',
-      menuList: [
-        {
-          title: '概览',
-          route: 'dashboard',
-          code: 'overview',
-        },
-        {
-          title: '门户管理',
-          route: 'content',
-          code: 'portal',
-        },
-        {
-          title: '运营管理',
-          route: 'product',
-          code: 'operate',
-        },
-        {
-          title: '多租户管理',
-          route: '/tenant-list',
-          code: 'multenand',
-        },
-        {
-          title: '运营统计',
-          route: 'platform-statistics',
-          code: 'statistics',
-        },
-        {
-          title: '工单管理',
-          route: 'order-list',
-          code: 'order',
-        },
-      ],
-      activeMenu: 'dashboard',
+      menuList: columns,
     }
   },
   computed: {
-    ...mapGetters(['sidebar', 'avatar', 'userName']),
+    ...mapGetters(['sidebar', 'avatar', 'userName', 'activeColumn']),
   },
   created() {
     this.init()
   },
   methods: {
-    async init() {
-      if (store.getters.tenantId === '') {
-        await store.dispatch('user/getTenantId')
-      }
-      // 当有code时，进行登录
-      const hasToken = getToken()
-      const { hash } = location
-      const codeIndex = hash.indexOf('code=')
-
-      if (codeIndex > -1) {
-        await store.dispatch('user/login', hash.substring(codeIndex + 5))
-        await store.dispatch('user/getUserInfo')
-      } else if (hasToken) {
-        await store.dispatch('user/getUserInfo')
-      } else {
-        // 没有code，没有token，跳转到maxkey登录页面
-        console.log(process.env.VUE_APP_LOGIN_URL + process.env.VUE_APP_REDIRECTURL)
-        window.location = process.env.VUE_APP_LOGIN_URL + process.env.VUE_APP_REDIRECTURL
-      }
-    },
+    init() {},
     changeMenu(menu) {
-      this.activeMenu = menu.code
+      store.dispatch('permission/changeActiveColumn', menu.code)
       this.$router.push(menu.route)
     },
     async logout() {

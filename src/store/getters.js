@@ -6,5 +6,8 @@ const getters = {
   userName: (state) => state.user.userName,
   tenantId: (state) => state.user.tenantId,
   isLogin: (state) => state.user.isLogin,
+  columnList: (state) => state.permission.columnList,
+  routerList: (state) => state.permission.routerList,
+  activeColumn: (state) => state.permission.activeColumn,
 }
 export default getters

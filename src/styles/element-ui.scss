@@ -14,10 +14,12 @@
 .el-upload__input {
   display: none;
 }
-
+.el-scrollbar .el-scrollbar__wrap {
+  overflow-x: hidden;
+}
 .cell {
   .el-tag {
-    margin-right: 0px;
+    margin-right: 0;
   }
 }
 
@@ -41,7 +43,7 @@
     text-align: center;
 
     .el-tag {
-      margin-right: 0px;
+      margin-right: 0;
     }
   }
 }

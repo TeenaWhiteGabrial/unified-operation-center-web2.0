@@ -1,0 +1,20 @@
+[
+  {
+    "title": "概览",
+    "route": "dashboard",
+    "code": "dashboard",
+    "show": true
+  },
+  {
+    "title": "门户网站",
+    "route": "content",
+    "code": "website",
+    "show": true
+  },
+  {
+    "title": "运营管理",
+    "route": "production",
+    "code": "operation",
+    "show": true
+  }
+]

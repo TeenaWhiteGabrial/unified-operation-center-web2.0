@@ -1,19 +1,15 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import portalRoute from './modules/portal'
-import operateRoute from './modules/operate'
-import multenantRoute from './modules/multenant'
-import statsRoute from './modules/stats'
+import website from './modules/website'
+import operation from './modules/operation'
 
 /* Layout */
 import Layout from '@/layout'
 
 Vue.use(Router)
 
-/**
- * 路由和菜单的关联性不强，分开
- */
 export const constantRoutes = [
+  // it will exist no matter what
   {
     path: '/',
     component: Layout,
@@ -26,26 +22,21 @@ export const constantRoutes = [
         component: () => import('@/views/dashboard/index'),
         meta: { title: '概览', icon: 'dashboard' },
       },
-      // ...portalRoute,
-      // ...operateRoute,
-      // ...multenantRoute,
-      // ...statsRoute,
-      {
-        path: '/404',
-        component: () => import('@/views/404'),
-        hidden: true,
-      },
     ],
+  },
+  {
+    path: '/404',
+    component: () => import('@/views/404'),
+    hidden: true,
   },
   { path: '*', redirect: '/404', hidden: true },
 ]
 
-export const asyncMenu = {
-  portalRoute,
-  operateRoute,
-  multenantRoute,
-  statsRoute,
-}
+export const asyncRoutes = [
+  //generate by role-permission
+  ...website,
+  ...operation,
+]
 
 const createRouter = () =>
   new Router({

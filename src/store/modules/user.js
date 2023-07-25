@@ -9,6 +9,7 @@ const getDefaultState = () => {
     avatar: '', // 运营中心logo
     tenantId: '',
     isLogin: false,
+    userRole: '',
   }
 }
 
@@ -32,6 +33,9 @@ const mutations = {
   },
   SET_IS_LOGIN: (state, isLogin) => {
     state.isLogin = isLogin
+  },
+  SET_USER_ROLE: (state, role) => {
+    state.userRole = role
   },
 }
 
@@ -100,6 +104,7 @@ const actions = {
           commit('SET_AVATAR', response.data.logo)
           commit('SET_TENANTID', response.data.tenant_id)
           commit('SET_IS_LOGIN', true)
+          commit('SET_USER_ROLE', response.data.user_role)
           resolve()
         })
         .catch((error) => {

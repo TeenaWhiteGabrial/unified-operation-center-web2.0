@@ -1,6 +1,7 @@
 'use strict'
 const path = require('path')
 const defaultSettings = require('./src/settings.js')
+const NodePolyfillPlugin = require('node-polyfill-webpack-plugin')
 
 function resolve(dir) {
   return path.join(__dirname, dir)
@@ -79,6 +80,7 @@ module.exports = {
         include: 'initial',
         fileBlacklist: [/\.map$/, /hot-update\.js$/, /runtime\..*\.js$/],
       }),
+      new NodePolyfillPlugin(),
     ],
     optimization: {
       runtimeChunk: 'single',

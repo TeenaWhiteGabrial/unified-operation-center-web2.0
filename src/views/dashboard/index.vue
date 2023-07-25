@@ -7,54 +7,24 @@
         </el-col>
         <el-col :span="23">
           <div class="user">您好，{{ userName }}</div>
-          <div>{{ currentTime }}，欢迎回到运营中心</div>
+          <div>{{ currentTime | parseTime('{y}年{m}月{d}日，周{a}') }}，欢迎回到运营中心</div>
         </el-col>
       </el-row>
     </div>
 
-    <div class="panel-box">
-      <h4 class="panel-header">门户管理</h4>
-      <div class="menu-style">
-        <div
-          v-for="(item, index) in menuList"
-          :key="index"
-          class="menu-style-item"
-          @click="routerLinkTo(item.router_link)"
-        >
-          <div class="centerL">
-            <svg-icon :icon-class="item.logo" class="dashIcon" />
-            <span class="menu-name">{{ item.menu_name }}</span>
+    <div v-for="block in menuList" :key="block.title">
+      <div v-if="block.show" class="panel-box">
+        <h4 class="panel-header">{{ block.title }}</h4>
+        <div class="menu-style">
+          <div v-for="(menu, index) in block.menuList" :key="index" class="menu-style-item">
+            <div v-if="menu.show" @click="routerLinkTo(menu.router_link)">
+              <div class="centerL">
+                <svg-icon :icon-class="menu.logo" class="dashIcon" />
+                <span class="menu-name">{{ menu.menu_name }}</span>
+              </div>
+              <div class="menu-desc">{{ menu.menu_describe }}</div>
+            </div>
           </div>
-          <div class="menu-desc">{{ item.menu_describe }}</div>
-        </div>
-      </div>
-    </div>
-    <div class="panel-box">
-      <h4 class="panel-header">运营管理</h4>
-      <div class="menu-style">
-        <div
-          v-for="(item, index) in yyglMenuList"
-          :key="index"
-          class="menu-style-item"
-          @click="routerLinkTo(item.router_link)"
-        >
-          <div class="centerL">
-            <svg-icon :icon-class="item.logo" class="dashIcon" />
-            <span class="menu-name">{{ item.menu_name }}</span>
-          </div>
-          <div class="menu-desc">{{ item.menu_describe }}</div>
-        </div>
-      </div>
-    </div>
-    <div class="panel-box">
-      <h4 class="panel-header">多租户管理</h4>
-      <div class="menu-style">
-        <div class="menu-style-item" @click="routerLinkTo(`tenant-list`)">
-          <div class="centerL">
-            <svg-icon icon-class="tenant" class="dashIcon" />
-            <span class="menu-name">租户管理</span>
-          </div>
-          <div class="menu-desc">通过新增租户的方式实现项目的快速创建、交付。</div>
         </div>
       </div>
     </div>
@@ -62,76 +32,24 @@
 </template>
 
 <script>
+import { parseTime } from '@/utils'
 import { mapGetters } from 'vuex'
+import boardMenu from '../../../config/dashboard.json'
 
 export default {
   name: 'app-home',
   data() {
     return {
-      menuList: [
-        {
-          menu_name: '内容管理',
-          menu_describe: '提供动态资讯创建、编辑、发布的功能服务。',
-          router_link: 'content',
-          logo: 'content',
-        },
-        {
-          menu_name: '栏目管理',
-          menu_describe: '可添加栏目，对栏目进行管理。',
-          router_link: 'column',
-          logo: 'column',
-        },
-        {
-          menu_name: '门户配置',
-          menu_describe: '对网站基础信息、网站页面等个性化信息进行设置。',
-          router_link: 'portal-configuration',
-          logo: 'portal',
-        },
-        {
-          menu_name: '站点管理',
-          menu_describe: '展示通过多租户方式开通的门户网站。',
-          router_link: 'site',
-          logo: 'site',
-        },
-        {
-          menu_name: '生态伙伴',
-          menu_describe: '对网站生态伙伴页面进行配置。',
-          router_link: 'partner',
-          logo: 'partner',
-        },
-      ],
-      yyglMenuList: [
-        {
-          menu_name: '产品管理',
-          menu_describe: '提供产品与服务创建、编辑、发布的功能服务。',
-          router_link: 'product',
-          logo: 'production',
-        },
-        {
-          menu_name: '解决方案管理',
-          menu_describe: '提供解决方案创建、编辑、发布的功能服务。',
-          router_link: 'solution',
-          logo: 'solution',
-        },
-        {
-          menu_name: '应用案例',
-          menu_describe: '提供应用案例创建、编辑、发布的功能服务。',
-          router_link: 'application-case',
-          logo: 'case',
-        },
-        {
-          menu_name: '认证审核',
-          menu_describe: '对实名认证企业进行审核。',
-          router_link: 'audit-authenticate',
-          logo: 'audit',
-        },
-      ],
+      menuList: boardMenu,
     }
   },
   computed: {
     ...mapGetters(['userName']),
     currentTime() {
       return new Date().getTime()
+    },
+    newYearTime() {
+      return parseTime(1707494400 - new Date().getTime(), '{d}天{h}小时{m}分钟{s}秒')
     },
   },
   created() {},
@@ -143,6 +61,8 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+@import '~@/styles/mixin.scss';
+
 .layout {
   position: relative;
   background: #f5f7f9;
