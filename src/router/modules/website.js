@@ -10,19 +10,19 @@ export default [
     meta: { title: '基础配置', icon: 'basic-config' },
     children: [
       {
-        path: '/basic-config/list',
+        path: 'list',
         name: 'basicConfigList',
         component: () => import('@/views/basic-config/list'),
         meta: { title: '列表' },
       },
       {
-        path: '/detail',
+        path: 'detail',
         name: 'detail',
         component: () => import('@/views/basic-config/detail'),
         meta: { title: '详情' },
       },
       {
-        path: '/edit',
+        path: 'edit',
         name: 'edit',
         component: () => import('@/views/basic-config/edit'),
         meta: { title: '编辑' },

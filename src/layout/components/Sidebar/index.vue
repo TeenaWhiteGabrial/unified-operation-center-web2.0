@@ -12,10 +12,9 @@
       >
         <!-- 下面是主要实现功能的组件 -->
         <sidebar-item
-          v-for="route in columnList[activeColumn + 'Data']"
-          :key="route.path"
-          :item="route"
-          :base-path="route.path"
+          v-for="menu in columnList[activeColumn + 'Data']"
+          :key="menu.path"
+          :item="menu"
         ></sidebar-item>
       </el-menu>
     </el-scrollbar>

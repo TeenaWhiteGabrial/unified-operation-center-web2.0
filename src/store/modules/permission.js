@@ -159,7 +159,7 @@ function generateMenuList(menu) {
     for (let j = 0; j < asyncRoutes.length; j++) {
       if (res[i].children) {
         // 菜单有children，说明有二级菜单
-        res[i].path = `/${  res[i].code}`
+        res[i].path = `/${res[i].code}`
         res[i].meta = { icon: res[i].icon, title: res[i].desc }
         res[i].children = generateMenuList(res[i].children)
       } else if (res[i].code === asyncRoutes[j].name) {
@@ -189,7 +189,7 @@ const state = {
     operationData: [],
   },
   routerList: [],
-  activeColumn: 'dashboard',
+  activeColumn: 'operation',
 }
 
 const mutations = {
@@ -214,11 +214,11 @@ const actions = {
         operationData: [],
       }
       for (let i = 0; i < menuList.length; i++) {
-        columnList[`${menuList[i].column  }Data`].push(menuList[i]) // 栏目
+        columnList[`${menuList[i].column}Data`].push(menuList[i]) // 栏目
       }
       commit('SET_COLUMN_LIST', columnList)
-
       const routeList = generateRouteList(menuData)
+      routeList.push({ path: '*', redirect: '/404' }) // 404路由重定向要放到最后
       commit('SET_ROUTE_LIST', routeList)
       resolve(routeList)
     })

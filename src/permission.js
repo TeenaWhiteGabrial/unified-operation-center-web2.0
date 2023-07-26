@@ -16,7 +16,7 @@ router.beforeEach(async (to, from, next) => {
 
   // set page title
   document.title = getPageTitle(to.meta.title)
-
+  console.log('1', store.getters.routerList)
   // if (store.getters.tenantId === '') {
   //   await store.dispatch('user/getTenantId')
   // }
@@ -35,13 +35,14 @@ router.beforeEach(async (to, from, next) => {
   //   console.log(process.env.VUE_APP_LOGIN_URL + process.env.VUE_APP_REDIRECTURL)
   //   window.location = process.env.VUE_APP_LOGIN_URL + process.env.VUE_APP_REDIRECTURL
   // }
-
   if (!store.getters.routerList || store.getters.routerList.length === 0) {
     const routeList = await store.dispatch('permission/generateMenuRoutes')
     routeList.forEach((route) => {
       router.addRoute(route)
     })
+    next({ ...to, replace: true })
   }
+  console.log('2', store.getters.routerList)
 
   if (to.path === '/dashboard' || to.path === '/404') {
     store.dispatch('app/noSideBar')

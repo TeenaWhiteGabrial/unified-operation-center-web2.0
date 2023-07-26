@@ -28,10 +28,6 @@ export default {
     item: {
       type: Object,
     },
-    basePath: {
-      type: String,
-      default: '',
-    },
   },
   data() {
     return {
@@ -66,9 +62,6 @@ export default {
           this.data.meta.icon = this.data.meta.icon ? this.data.meta.icon : this.item.meta.icon
         }
       }
-    },
-    resolvePath(routePath) {
-      return path.resolve(this.basePath, routePath)
     },
     handleClick(path) {
       console.log('path:', path)

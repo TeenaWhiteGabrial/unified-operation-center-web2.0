@@ -7,6 +7,15 @@ export default [
     name: 'content',
     component: Layout,
     meta: { title: '内容管理', icon: 'content' }, //
+    alwaysShow: true,
+    children: [
+      {
+        path: 'index',
+        name: 'Content',
+        component: () => import('@/views/content/index'),
+        meta: { title: '列表' },
+      },
+    ],
   },
   {
     path: '/production',

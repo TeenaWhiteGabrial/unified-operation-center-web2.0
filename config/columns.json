@@ -1,19 +1,19 @@
 [
   {
     "title": "概览",
-    "route": "dashboard",
+    "route": "/dashboard",
     "code": "dashboard",
     "show": true
   },
   {
     "title": "门户网站",
-    "route": "content",
+    "route": "/basic-config",
     "code": "website",
     "show": true
   },
   {
     "title": "运营管理",
-    "route": "production",
+    "route": "/content",
     "code": "operation",
     "show": true
   }
