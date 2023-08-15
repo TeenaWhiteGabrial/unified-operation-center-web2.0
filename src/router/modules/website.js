@@ -13,7 +13,7 @@ export default [
         path: 'list',
         name: 'basicConfigList',
         component: () => import('@/views/basic-config/list'),
-        meta: { title: '列表' },
+        meta: { title: '列表', activeMenu: '/basic-config/list', main: true },
       },
       {
         path: 'detail',

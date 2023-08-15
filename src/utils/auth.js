@@ -1,4 +1,4 @@
-const TokenKey = 'UOC_TOKEN'
+const TokenKey = 'mtoc_TOKEN'
 
 export function getToken() {
   return localStorage.getItem(TokenKey)

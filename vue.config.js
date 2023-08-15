@@ -37,27 +37,17 @@ module.exports = {
     },
     proxy: {
       '/maxkey-mgt-api': {
-        target: 'http://mgt.maxkey.top:8018', // 开发
+        target: 'http://mgt.maxkey.top:8018', // 发送短信
         changeOrigin: true, // 表示是否跨域
       },
-      '/uoc': {
-        target: 'http://10.221.19.221',
+      '/mtoc': {
+        target: 'http://117.73.12.32:9090', // 'http://117.73.11.254:8008',
         changeOrigin: true, // 表示是否跨域
-      },
-      '/ucc': {
-        target: 'http://10.221.19.221:80', // 开发
-        changeOrigin: true, // 表示是否跨域
-      },
-      '/appstore': {
-        target: 'http://117.73.3.245:8083', // 开发
-        changeOrigin: true, // 表示是否跨域
+        pathRewrite: {
+          '^/': '/mock/1131/',
+        },
       },
     },
-    // before: require('./mock/mock-server.js')
-
-    // onBeforeSetupMiddleware: function (devServer) {
-    //   devServer.app.use('/', require('./mock/mock-server.js'));
-    // }
     devMiddleware: {
       // 使用 devMiddleware 来实现类似于 before 的功能
       index: true,

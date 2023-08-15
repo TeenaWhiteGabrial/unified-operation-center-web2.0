@@ -7,13 +7,20 @@ export default [
     name: 'content',
     component: Layout,
     meta: { title: '内容管理', icon: 'content' }, //
+    redirect: '/content/index',
     alwaysShow: true,
     children: [
       {
         path: 'index',
         name: 'Content',
         component: () => import('@/views/content/index'),
-        meta: { title: '列表' },
+        meta: { title: '列表', activeMenu: '/content/index', main: true },
+      },
+      {
+        path: 'detail',
+        name: 'contentDetail',
+        component: () => import('@/views/content/detail'),
+        meta: { title: '详情', activeMenu: '/content/index' },
       },
     ],
   },

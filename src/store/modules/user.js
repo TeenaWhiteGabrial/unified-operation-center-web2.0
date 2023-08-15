@@ -8,6 +8,7 @@ const getDefaultState = () => {
     userName: '',
     avatar: '', // 运营中心logo
     tenantId: '',
+    tenantName: '',
     isLogin: false,
     userRole: '',
   }
@@ -31,6 +32,9 @@ const mutations = {
   SET_TENANTID: (state, tenantId) => {
     state.tenantId = tenantId
   },
+  SET_TENANTNAME: (state, tenantName) => {
+    state.tenantName = tenantName
+  },
   SET_IS_LOGIN: (state, isLogin) => {
     state.isLogin = isLogin
   },
@@ -47,11 +51,11 @@ const actions = {
       getTenantIdByUrl(appUrl)
         .then((response) => {
           if (response.success == 'success') {
-            const data = response.data.tenant_id
-            commit('SET_TENANTID', data)
+            commit('SET_TENANTID', response.data.tenant_id)
+            commit('SET_TENANTNAME', response.data.tenant_name)
             resolve()
           } else {
-            reject()
+            reject(new Error('未获取到租户信息！'))
           }
         })
         .catch((error) => {
@@ -65,14 +69,14 @@ const actions = {
     return new Promise((resolve, reject) => {
       login({
         tenant_id: state.tenantId,
-        code,
+        code: '1',
+        type: 'operationCenter', // 运营中心代码
         redirect_uri: process.env.VUE_APP_REDIRECTURL,
       })
         .then((response) => {
           if (response.data.TYPE === '运营中心') {
-            commit('SET_TOKEN', response.data.access_token)
-            commit('SET_TOKEN', response.data.access_token)
-            setToken(response.data.access_token)
+            commit('SET_TOKEN', response.data.maxKey_token)
+            setToken(response.data.access_token) //token存储在本地
 
             const newUrl = `${location.protocol}//${location.host}${location.pathname}`
             window.history.replaceState(
@@ -102,7 +106,6 @@ const actions = {
         .then((response) => {
           commit('SET_USER_NAME', response.data.user_name)
           commit('SET_AVATAR', response.data.logo)
-          commit('SET_TENANTID', response.data.tenant_id)
           commit('SET_IS_LOGIN', true)
           commit('SET_USER_ROLE', response.data.user_role)
           resolve()

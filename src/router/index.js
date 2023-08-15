@@ -28,7 +28,6 @@ export const constantRoutes = [
     path: '/404',
     component: () => import('@/views/404'),
   },
-  //{ path: '*', redirect: '/404' },
 ]
 
 export const asyncRoutes = [

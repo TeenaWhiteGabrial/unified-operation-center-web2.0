@@ -2,7 +2,7 @@
   <div class="side-bar-index">
     <el-scrollbar style="height: 100%">
       <el-menu
-        :default-active="$route.path"
+        :default-active="activeMenu"
         background-color="#304156"
         text-color="#bfcbd9"
         :unique-opened="false"
@@ -15,6 +15,7 @@
           v-for="menu in columnList[activeColumn + 'Data']"
           :key="menu.path"
           :item="menu"
+          :base-path="menu.path"
         ></sidebar-item>
       </el-menu>
     </el-scrollbar>
@@ -31,6 +32,14 @@ export default {
   },
   computed: {
     ...mapGetters(['columnList', 'activeColumn']),
+    activeMenu() {
+      const route = this.$route
+      const { meta, path } = route
+      if (meta.activeMenu) {
+        return meta.activeMenu
+      }
+      return path
+    },
   },
 }
 </script>

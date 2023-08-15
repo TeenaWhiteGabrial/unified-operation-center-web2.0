@@ -7,13 +7,13 @@
   },
   {
     "title": "门户网站",
-    "route": "/basic-config",
+    "route": "/basic-config/list",
     "code": "website",
     "show": true
   },
   {
     "title": "运营管理",
-    "route": "/content",
+    "route": "/content/index",
     "code": "operation",
     "show": true
   }

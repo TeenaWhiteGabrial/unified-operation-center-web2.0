@@ -16,7 +16,7 @@ router.beforeEach(async (to, from, next) => {
 
   // set page title
   document.title = getPageTitle(to.meta.title)
-  console.log('1', store.getters.routerList)
+
   // if (store.getters.tenantId === '') {
   //   await store.dispatch('user/getTenantId')
   // }
@@ -25,16 +25,18 @@ router.beforeEach(async (to, from, next) => {
   // const { hash } = location
   // const codeIndex = hash.indexOf('code=')
 
-  // if (codeIndex > -1) {
-  //   await store.dispatch('user/login', hash.substring(codeIndex + 5))
-  //   await store.dispatch('user/getUserInfo')
-  // } else if (hasToken) {
-  //   await store.dispatch('user/getUserInfo')
+  //if (codeIndex > -1) {
+  //  await store.dispatch('user/login', hash.substring(codeIndex + 5))
+  //} else if (hasToken) {
+  // await store.dispatch('user/getUserInfo')
   // } else {
-  // // 没有code，没有token，跳转到maxkey登录页面
+  //   // 没有code，没有token，跳转到maxkey登录页面
   //   console.log(process.env.VUE_APP_LOGIN_URL + process.env.VUE_APP_REDIRECTURL)
-  //   window.location = process.env.VUE_APP_LOGIN_URL + process.env.VUE_APP_REDIRECTURL
+  //   // window.location.href = process.env.VUE_APP_LOGIN_URL + process.env.VUE_APP_REDIRECTURL
   // }
+
+  await store.dispatch('permission/initMenuData')
+  await store.dispatch('permission/initActiveColumn', to.path)
   if (!store.getters.routerList || store.getters.routerList.length === 0) {
     const routeList = await store.dispatch('permission/generateMenuRoutes')
     routeList.forEach((route) => {
@@ -42,7 +44,6 @@ router.beforeEach(async (to, from, next) => {
     })
     next({ ...to, replace: true })
   }
-  console.log('2', store.getters.routerList)
 
   if (to.path === '/dashboard' || to.path === '/404') {
     store.dispatch('app/noSideBar')

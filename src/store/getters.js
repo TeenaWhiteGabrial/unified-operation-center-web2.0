@@ -9,5 +9,6 @@ const getters = {
   columnList: (state) => state.permission.columnList,
   routerList: (state) => state.permission.routerList,
   activeColumn: (state) => state.permission.activeColumn,
+  menuData: (state) => state.permission.menuData,
 }
 export default getters
