@@ -17,23 +17,23 @@ router.beforeEach(async (to, from, next) => {
   // set page title
   document.title = getPageTitle(to.meta.title)
 
-  // if (store.getters.tenantId === '') {
-  //   await store.dispatch('user/getTenantId')
-  // }
-  // // 当有code时，进行登录
-  // const hasToken = getToken()
-  // const { hash } = location
-  // const codeIndex = hash.indexOf('code=')
+  if (store.getters.tenantId === '') {
+    await store.dispatch('user/getTenantId')
+  }
+  // 当有code时，进行登录
+  const hasToken = getToken()
+  const { hash } = location
+  const codeIndex = hash.indexOf('code=')
 
-  //if (codeIndex > -1) {
-  //  await store.dispatch('user/login', hash.substring(codeIndex + 5))
-  //} else if (hasToken) {
-  // await store.dispatch('user/getUserInfo')
-  // } else {
-  //   // 没有code，没有token，跳转到maxkey登录页面
-  //   console.log(process.env.VUE_APP_LOGIN_URL + process.env.VUE_APP_REDIRECTURL)
-  //   // window.location.href = process.env.VUE_APP_LOGIN_URL + process.env.VUE_APP_REDIRECTURL
-  // }
+  if (codeIndex > -1) {
+    await store.dispatch('user/login', hash.substring(codeIndex + 5))
+  } else if (hasToken) {
+    await store.dispatch('user/getUserInfo')
+  } else {
+    // 没有code，没有token，跳转到maxkey登录页面
+    console.log(process.env.VUE_APP_LOGIN_URL + process.env.VUE_APP_REDIRECTURL)
+    // window.location.href = process.env.VUE_APP_LOGIN_URL + process.env.VUE_APP_REDIRECTURL
+  }
 
   await store.dispatch('permission/initMenuData')
   await store.dispatch('permission/initActiveColumn', to.path)

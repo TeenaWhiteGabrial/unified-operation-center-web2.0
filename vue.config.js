@@ -41,7 +41,7 @@ module.exports = {
         changeOrigin: true, // 表示是否跨域
       },
       '/mtoc': {
-        target: 'http://117.73.12.32:9090', // 'http://117.73.11.254:8008',
+        target: 'http://10.221.19.202:9090', // 'http://117.73.11.254:8008',
         changeOrigin: true, // 表示是否跨域
         pathRewrite: {
           '^/': '/mock/1131/',

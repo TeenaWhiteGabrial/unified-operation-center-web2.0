@@ -76,7 +76,7 @@ const actions = {
         .then((response) => {
           if (response.data.TYPE === '运营中心') {
             commit('SET_TOKEN', response.data.maxKey_token)
-            setToken(response.data.access_token) //token存储在本地
+            setToken(response.data.access_token) // token存储在本地
 
             const newUrl = `${location.protocol}//${location.host}${location.pathname}`
             window.history.replaceState(
